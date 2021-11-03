@@ -119,7 +119,7 @@
   {/if}
   <div>
     <!-- auto add to metamask -->
-    <p>Prestige points : {$User.balance} { $Claimer.simbol }</p>
+    <p>Prestige points : {parseFloat($User.balance/10e17).toFixed(18)} { $Claimer.simbol }</p>
     <p>Investment : {$User.funds} { $Tiers.simbol }</p>
     <p class="tooltip">
       Days since investment : {$User.funds>0?
