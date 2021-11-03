@@ -2,6 +2,7 @@
   import Tier from "./Tier.svelte";
   import { Claimer, Tiers, Connection, User } from "./stores.js";
   import { getNotificationsContext } from "svelte-notifications";
+  import FaSync from 'svelte-icons/fa/FaSync.svelte'
 
   const { addNotification } = getNotificationsContext();
 
@@ -121,36 +122,32 @@
     <p>Prestige points : {$User.balance} { $Claimer.simbol }</p>
     <p>Investment : {$User.funds} { $Tiers.simbol }</p>
     <p class="tooltip">
-      Days since investment : {$User.funds>0?$User.affiliation_date*2/86400:0}
+      Days since investment : {$User.funds>0?
+        ((Math.ceil(new Date().getTime()/1000)-$User.affiliation_date)/86400).toFixed(1)
+        :
+        0}
       {#if $User.tier >= 0}
         <span class="tooltiptext tooltop-large">
           invested on {new Date($User.affiliation_date * 1000)}
         </span>
       {/if}
     </p>
-    <p>Current Mintiable Reward : {$User.reward} {$Claimer.simbol}</p>
+    <p>Current Mintiable Reward : {$User.reward} {parseFloat($User.reward/10e17).toFixed(18)} {$Claimer.simbol}</p>
     <div>
       <button
         class="btn tooltip"
         disabled={$User.reward <= 0 || $Connection.tx_OnGoing}
         on:click={handleUnClaim}>
-        Claim
-        {#if $Connection.tx_OnGoing}
-          <i class="fas fa-spinner fa-pulse" />
-        {/if}
-		<span class="tooltiptext">
-            {#if $User.reward <= 0 }
-                Not reward to claim
-            {/if}
-        </span>
+          Claim
+          {#if $User.reward <= 0 }
+            <span class="tooltiptext">
+              Not reward to claim
+            </span>
+          {/if}
       </button>
       <button class="btn tooltip" disabled={$Connection.tx_OnGoing} on:click={handleRefesh}>
-        {#if $Connection.tx_OnGoing}
-          <i class="fas fa-sync fa-pulse" />
-        {:else}
-          <i class="fas fa-sync" />
-        {/if}
-		<span class="tooltiptext">
+          <div class="icon {$Connection.tx_OnGoing ? 'animated' : ''}"><FaSync /></div>
+		        <span class="tooltiptext">
             Refresh
         </span>
       </button>
@@ -178,5 +175,28 @@
 
   .wallet .btn {
     align-self: center;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .animated {
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+  }
+
+  @keyframes spin {
+      from {
+          transform:rotate(0deg);
+      }
+      to {
+          transform:rotate(360deg);
+      }
   }
 </style>

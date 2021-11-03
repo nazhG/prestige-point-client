@@ -6,6 +6,7 @@
   import { useNavigate, useLocation } from "svelte-navigator";
   import Modal from './Modal.svelte';
 	import { Connection, User } from './stores.js';
+  import FaSpinner from 'svelte-icons/fa/FaSpinner.svelte'
 
 const { open } = getContext('simple-modal');
 const { addNotification } = getNotificationsContext();
@@ -133,7 +134,9 @@ const accountFilter = (_account) => {
 			{/if}
       </span>
     {#if $Connection.tx_Message}
-      <br><i class="fas fa-spinner fa-pulse"></i>&nbsp;{ $Connection.tx_Message }
+    <div class="loading">
+      <div class="icon"><FaSpinner /></div>&nbsp;{ $Connection.tx_Message }
+    </div>
     {/if}
   {:else}
     Connect MetaMask
@@ -141,6 +144,28 @@ const accountFilter = (_account) => {
 </button>
 
 <style>
+
+  .loading {
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    color: white;
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+  }
+
+  @keyframes spin {
+      from {
+          transform:rotate(0deg);
+      }
+      to {
+          transform:rotate(360deg);
+      }
+  }
 
   .warnig {
     color: white;

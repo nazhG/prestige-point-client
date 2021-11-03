@@ -24,11 +24,11 @@ const Claimer = writable({
       },
     ],
     simbol: "TVP",
-    address: "0x0CA7Ec7b831305DCA0bfCF8E62f959A50c4121A6",
+    address: "0xcB8dA592C61eF0A57B088BFf429494163F0b5c8e",
     contract: null,
   }),
   Tiers = writable({
-    address: "0xAeeF3dE727E4a4ecAa7b7Ff648c7167C5329ec4B",
+    address: "0x3a2F08ED7b2D50CB5813CB04694C4d9f38fB49a1",
     payment: "0x2058A9D7613eEE744279e3856Ef0eAda5FCbaA7e",
     simbol: "USDC",
     contract: null,

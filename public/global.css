@@ -122,3 +122,12 @@ footer p {
 	display: flex;
     justify-content: center;
 }
+
+.icon {
+	width: 1.6rem;
+    height: 1.6rem;
+	margin-left: 4px;
+	color: #333;
+	padding: 4px;
+	margin: 0;
+}

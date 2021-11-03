@@ -71,6 +71,9 @@
 		console.log('Joining to tier');
 		
 		/// Join to tier
+		console.log('tiers',await $Tiers.contract.methods.tierValues().call());
+		
+		
 		await $Tiers.contract.methods.setTier($Connection.account, tier_num, []).send({ from: $Connection.account })
 		.once('sent', () => {
 				connection.tx_Message = 'waiting for approval';

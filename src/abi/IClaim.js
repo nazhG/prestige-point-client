@@ -3,7 +3,7 @@ export default [
     "inputs": [
       {
         "internalType": "address",
-        "name": "_tierAddress",
+        "name": "tierAddress_",
         "type": "address"
       }
     ],
@@ -33,6 +33,25 @@ export default [
       }
     ],
     "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RedeemReward",
     "type": "event"
   },
   {
@@ -177,6 +196,11 @@ export default [
         "internalType": "address",
         "name": "account_",
         "type": "address"
+      },
+      {
+        "internalType": "enum ITier.Tier",
+        "name": "userTier_",
+        "type": "uint8"
       }
     ],
     "name": "getGetJoinBlock",
@@ -202,7 +226,7 @@ export default [
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "reward",
+        "name": "reward_",
         "type": "uint256"
       }
     ],
@@ -220,9 +244,9 @@ export default [
     "name": "getTier",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "enum ITier.Tier",
         "name": "",
-        "type": "uint256"
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",

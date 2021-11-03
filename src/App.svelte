@@ -6,9 +6,11 @@
   	import { Router, Route, Link } from "svelte-navigator";
 	import Modal from 'svelte-simple-modal';
 	import { Claimer, Tiers, Connection, User } from './stores.js';
-	import abi_claim from './abi/Claim';
+	import abi_claim from './abi/IClaim';
 	import abi_tiers from './abi/ERC20TransferTier';
-	
+	import FaWallet from 'svelte-icons/fa/FaWallet.svelte'
+	import FaHome from 'svelte-icons/fa/FaHome.svelte'
+
     window.refreshUserInfo = async () => {
 		if(!$Connection.web3)
 			return console.log('Can\'t refresh');
@@ -26,14 +28,18 @@
 		try {
 			connection.tx_OnGoing = true;
 			
-			user.affiliation_date = await claimer.contract.methods.getGetJoinBlock($Connection.account).call();
-			console.log('User affiliation_date: ', user.affiliation_date );
-			User.set(user);
-			
 			connection.tx_Message = 'Consulting Tier';
 			Connection.set(connection); 
 			user.tier = await claimer.contract.methods.getTier($Connection.account).call();
 			console.log('User tier: ', user.tier);
+			
+			connection.tx_Message = 'Consulting Join time';
+			let blockNum = await claimer.contract.methods.getGetJoinBlock($Connection.account, user.tier).call();
+			user.affiliation_date = (await $Connection.web3.eth.getBlock(blockNum)).timestamp;
+			console.log('User affiliation_date: Timestamp %s Block %s', user.affiliation_date, blockNum);
+			console.log(new Date().getTime());
+			
+			User.set(user);
 			
 			connection.tx_Message = 'Consulting Tier Balance';
 			Connection.set(connection); 
@@ -74,10 +80,10 @@
 		<span>Prestige Points</span>
 		<nav>
 			<Link to="/">
-				<i class="fas fa-home"></i>
+				<div class="icon"><FaHome/></div>
 			</Link>
 			<Link to="wallet">
-				<i class="fas fa-wallet"></i>
+				<div class="icon"><FaWallet/></div>
 			</Link>
 		</nav>
 		<Connect_Button />
@@ -144,10 +150,8 @@
     	justify-content: space-around;
 	}
 
-	nav i {
-		font-size: 1.6em;
-		color: #333;
-		padding: 4px;
+	nav {
+		display: flex;
 	}
 
 	@media (min-width: 640px) {
