@@ -132,7 +132,7 @@
         </span>
       {/if}
     </p>
-    <p>Current Mintiable Reward : {$User.reward} {parseFloat($User.reward/10e17).toFixed(18)} {$Claimer.simbol}</p>
+    <p>Current Mintiable Reward : {parseFloat($User.reward/10e17).toFixed(18)} {$Claimer.simbol}</p>
     <div>
       <button
         class="btn tooltip"

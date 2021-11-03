@@ -154,6 +154,12 @@
 		display: flex;
 	}
 
+	.icon {
+		margin-left: 15px;
+		width: 2rem;
+		height: 2rem;
+	}
+
 	@media (min-width: 640px) {
 		main {
 			max-width: none;
