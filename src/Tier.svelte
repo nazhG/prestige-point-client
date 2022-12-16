@@ -2,6 +2,9 @@
     export let tier_name, join_cost, tier_num, reward_token_symbol, pay_token_symbol;
   	import { getNotificationsContext } from "svelte-notifications";
 	import { Claimer, Tiers, Connection, User } from './stores.js';
+	import {getContext} from 'svelte';
+	import {ROUTER} from 'svelte-routing/src/contexts';
+	const { activeRoute } = getContext(ROUTER);
 	import IERC20 from './abi/IERC20';
 
 	const { addNotification } = getNotificationsContext();
